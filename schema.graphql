@@ -1,0 +1,40 @@
+type News {
+	id: Int
+	title: String
+	image: String
+	berita: String
+}
+
+type User {
+	id: Int
+	name: String
+	username: String
+	email: String
+}
+
+type Comments {
+	id: Int
+	name: String,
+	comment: String
+}
+
+type Token {
+	token: String
+	expired: String	
+}
+type Query {
+	news: [News]
+	users: [User]
+    comments: [Comments]
+}
+type Mutation {
+	createNews(title: String, image: String, berita: String): News,
+	getNews(id: Int): News,
+	updateNews(id: Int, title: String, image: String, berita: String): News,
+	deleteNews(id: Int): News,
+
+    createComment(id: Int, name: String, comment: String): Comments
+
+	register(name: String, email:String,username: String, password: String): User,
+	login(username: String, password: String): Token
+}

@@ -1,0 +1,19 @@
+{
+  "name": "projectpersonal3-graphql-webberita-yogaprasutiyo",
+  "version": "1.0.0",
+  "description": "Project Personal ke-3, Yoga Julian Prasutiyo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yoga Julian Prasutiyo",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.10.2",
+    "bcryptjs": "^2.4.3",
+    "graphql": "^16.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "sequelize": "^6.24.0",
+    "tedious": "^15.1.0"
+  }
+}
