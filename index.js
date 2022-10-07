@@ -51,6 +51,7 @@ const resolvers = {
 					return [];
 				});
 		},
+		
 	},
 
 	Mutation: {
@@ -70,9 +71,10 @@ const resolvers = {
 		},
 
 		getNews: (parent, { id }) => {
+			var id = id;
             const isiComments = Comments.findAll({
                 where: {
-                  idnews: id,
+                  id: id,
                 },
               });
 			return News.findByPk(id)
