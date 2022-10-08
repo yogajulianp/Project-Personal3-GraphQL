@@ -51,45 +51,51 @@ const resolvers = {
 					return [];
 				});
 		},
+		getNews: (parent, { id }) => {
+			var id = id;
+      
+			return News.findOne({	
+				where: {
+					id: id,
+				  },
+			})
+				.then(detailNews => {
+					if (detailNews) {
+						return detailNews
+					} else {
+						return {};
+					}       
+				})
+				.catch(err => {
+					return {};
+				});
+		},
 		
 	},
 
 	Mutation: {
-		createNews: (parent, { title, image, berita }) => {
-			var news = {
-				title: title,
-				image: image,
-				berita: berita
-			}
-			return News.create(news)
-				.then(data => {
-					return data;
-				})
-				.catch(err => {
-					return {};
-				});
+		createNews: (parent, { title, image, berita }, context) => {
+			if (!context.data) 
+				return [];
+			else 
+				var news = {
+					title: title,
+					image: image,
+					berita: berita
+				}
+				return News.create(news)
+					.then(data => {
+						return data;
+					})
+					.catch(err => {
+						return {};
+					});
+			
 		},
 
-		getNews: (parent, { id }) => {
-			var id = id;
-            const isiComments = Comments.findAll({
-                where: {
-                  id: id,
-                },
-              });
-			return News.findByPk(id)
-				.then(detailNews => {
-					return ({
-                        news: detailNews,
-                        comments : isiComments
-                    })
-				})
-				.catch(err => {
-					return {};
-				});
-		},
+	
 
-        createComment: (parent, { id, name, comment }) => {
+        createComment: (parent, { id, name, comment }, context) => {
 			var comments = {
 				idnews : id,
 				name: name,
@@ -104,30 +110,40 @@ const resolvers = {
 				});
 		},
 
-		updateNews: (parent, { id, title, image, berita }) => {
-			var news = {
-				title: title,
-				image: image,
-				berita: berita
-			}
-			return News.update(news, {
-				where: { id: id }
-			})
-				.then(num => {
-					return {
-						id: id,
-						title: title,
-				        image: image,
-				        berita: berita
-					}
-
+		updateNews: (parent, { id, title, image, berita }, context) => {
+			if (!context.data) 
+				return [];
+			else 
+				var news = {
+					title: title,
+					image: image,
+					berita: berita
+				}
+				return News.update(news, {
+					where: { id: id }
 				})
-				.catch(err => {
-					return {};
-				});
+					.then(num => {
+						if (num > 0) {
+							return {
+								id: id,
+								title: title,
+								image: image,
+								berita: berita
+							}
+						} else {
+							return {};
+						}
+					})
+					.catch(err => {
+						return {};
+					});
+			
 		},
 
-		deleteNews: (parent, { id }) => {
+		deleteNews: (parent, { id }, context) => {
+			if (!context.data) 
+				return [];
+			else 
 			return News.findByPk(id)
 				.then(detailNews => {
 					if (detailNews ) {
@@ -149,6 +165,8 @@ const resolvers = {
 				});
 
 		},
+
+
 		register: (parent, { name, email, username, password }) => {
 			var hashpass = bcrypt.hashSync(password, 8);
 			var user = {

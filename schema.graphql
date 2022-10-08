@@ -3,7 +3,6 @@ type News {
 	title: String
 	image: String
 	berita: String
-	deleteAt: String
 }
 
 type User {
@@ -11,6 +10,7 @@ type User {
 	name: String
 	username: String
 	email: String
+	password: String
 }
 
 type Comments {
@@ -19,13 +19,13 @@ type Comments {
 	comment: String
 }
 
-type NewsComment {
+type NewsDetail {
 	id: Int
 	title: String
 	image: String
 	berita: String
-	deleteAt: String
-	comments : [Comments]
+	comments: [Comments]
+	
 }
 
 type Token {
@@ -36,15 +36,16 @@ type Query {
 	news: [News]
 	users: [User]
     comments: [Comments]
-	
+	getNews(id: Int): NewsDetail	
 }
+
 type Mutation {
 	createNews(title: String, image: String, berita: String): News,
-	getNews(id: Int): NewsComment,
+	
 	updateNews(id: Int, title: String, image: String, berita: String): News,
 	deleteNews(id: Int): News,
 
-    createComment(id: Int, name: String, comment: String): Comments
+    createComment(idnews: Int, name: String, comment: String): Comments
 
 	register(name: String, email:String,username: String, password: String): User,
 	login(username: String, password: String): Token
